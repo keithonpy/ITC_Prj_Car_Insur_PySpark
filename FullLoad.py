@@ -35,7 +35,7 @@ def FullLoad(postgres_url, postgres_properties, postgres_table_name, hive_data):
         df = spark.read.table("{}.{}".format(hive_database_name, hive_table_name))
         df.show()
     else:
-        print(f"{hive_database_name}.{hive_table_name} exists!! Will not do the Full Load")
+        print("{}.{} exists!! Will not do the Full Load".format(hive_database_name, hive_table_name))
 
     # Stop Spark session
     spark.stop()

@@ -24,12 +24,12 @@ def FullLoad(postgres_url, postgres_properties, postgres_table_name, hive_data):
     # Check if Hive table exists
     hive_database_name = hive_data['hive_database_name']
     hive_table_name = hive_data['hive_table_name']
-    if not spark.catalog.tableExists(f"{hive_database_name}.{hive_table_name}"):
+    if not spark.catalog.tableExists("{}.{}".format(hive_database_name, hive_table_name)):
         # Create database if not exists
         spark.sql("CREATE DATABASE IF NOT EXISTS project1db")
 
         # Create Hive Internal table over project1db
-        df_postgres.write.mode('overwrite').saveAsTable(f"{hive_database_name}.{hive_table_name}")
+        df_postgres.write.mode('overwrite').saveAsTable("{}.{}".format(hive_database_name, hive_table_name))
 
         # Read Hive table
         df = spark.read.table("{}.{}".format(hive_database_name, hive_table_name))
